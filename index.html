@@ -105,17 +105,10 @@
         let autocompleteData = {};
 
         // CSV data directly added as a string
-        const csvData = `
-                Name,Table Number
-                Suvarna,12
-                Sue,5
-                Charlie,8
-                David,15
-                Eve,3
-            `;
-
-        // Parse the CSV data string
-        parseCSV(csvData);
+        fetch('table_data.csv')
+            .then(response => response.text())
+            .then(text => parseCSV(text))
+            .catch(error => console.error('Error loading CSV:', error));
 
         function parseCSV(text) {
             data = [];
