@@ -2,9 +2,159 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WiTWA Conference Table Finder</title>
+
+    <!-- Import Franklin Gothic or similar font -->
+    <link href="https://fonts.googleapis.com/css2?family=Franklin+Gothic+Medium&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <style>
+        /* General Layout and Centering */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f7f7f7; /* Light background as per WiTWA's theme */
+            font-family: 'Franklin Gothic Medium', 'Arial', sans-serif;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h4 {
+            color: #56166B; /* WiTWA's primary purple */
+            font-weight: bold;
+            margin: 0;
+            font-size: 2em;
+        }
+
+        .header p {
+            color: #333;
+            font-size: 1.2em;
+            margin-top: 5px;
+        }
+
+        /* Container and Card Styling */
+        .container {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .card {
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+
+        /* Title Styling in Card */
+        h5 {
+            font-weight: bold;
+            color: #56166B;
+            text-align: center;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+        }
+
+        /* Search Bar and Result Styling */
+        .input-field input[type=text]:focus + label,
+        .input-field input[type=text].autocomplete-active {
+            color: #56166B;
+            border-bottom: 1px solid #56166B !important;
+            box-shadow: 0 1px 0 0 #56166B !important;
+        }
+
+        #result {
+            font-size: 1.2em;
+            margin-top: 20px;
+            color: #56166B;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <p>Yo this is working!</p>
+<!-- Header Section with Main Title and Subtitle -->
+<div class="header">
+    <h4>WiTWA Tech [+] Conference 2024</h4>
+    <p>Type in your name to find Your Table for the day!</p>
+</div>
+
+<!-- Table Finder Card Section -->
+<div class="container">
+    <div class="card">
+        <h5>Find Your Table</h5>
+        <div class="input-field">
+            <input type="text" id="searchBar" class="autocomplete" placeholder="Enter your name...">
+            <label for="searchBar">Name</label>
+        </div>
+        <div id="result"></div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let data = [];
+        let autocompleteData = {};
+
+        // CSV data directly added as a string
+        const csvData = `
+                Name,Table Number
+                Suvarna,12
+                Sue,5
+                Charlie,8
+                David,15
+                Eve,3
+            `;
+
+        // Parse the CSV data string
+        parseCSV(csvData);
+
+        function parseCSV(text) {
+            data = [];
+            autocompleteData = {};
+            const lines = text.trim().split("\n");
+            lines.forEach(line => {
+                const [name, tableNumber] = line.split(",");
+                if (name && tableNumber) {
+                    const trimmedName = name.trim();
+                    data.push({ name: trimmedName, table: tableNumber.trim() });
+                    autocompleteData[trimmedName] = null; // Materialize autocomplete expects { key: null }
+                }
+            });
+            initializeAutocomplete();
+        }
+
+        function initializeAutocomplete() {
+            const searchBar = document.getElementById('searchBar');
+            M.Autocomplete.init(searchBar, {
+                data: autocompleteData,
+                onAutocomplete: (selectedName) => {
+                    // Find the table number based on the selected name
+                    const result = data.find(person => person.name === selectedName);
+                    document.getElementById('result').textContent = result
+                        ? `${result.name} is at Table ${result.table}`
+                        : "No matching name found.";
+                }
+            });
+        }
+
+        // Optional: Clear results if search bar is emptied
+        document.getElementById('searchBar').addEventListener('input', (event) => {
+            if (!event.target.value) {
+                document.getElementById('result').textContent = '';
+            }
+        });
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>
