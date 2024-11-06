@@ -11,13 +11,13 @@
 
     <style>
         /* General Layout and Centering */
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+        body { 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
             background-color: #f7f7f7; /* Light background as per WiTWA's theme */
             font-family: 'Franklin Gothic Medium', 'Arial', sans-serif;
         }
@@ -36,16 +36,16 @@
         }
 
         .header p {
-            color: #333;
+            color: #56166B; /* Subheader color in purple */
             font-size: 1.2em;
             margin-top: 5px;
         }
 
         /* Container and Card Styling */
-        .container {
-            max-width: 400px;
-            width: 100%;
-            padding: 20px;
+        .container { 
+            max-width: 400px; 
+            width: 100%; 
+            padding: 20px; 
         }
 
         .card {
@@ -65,11 +65,11 @@
         }
 
         /* Search Bar and Result Styling */
-        .input-field input[type=text]:focus + label,
+        .input-field input[type=text]:focus + label, 
         .input-field input[type=text].autocomplete-active {
             color: #56166B;
             border-bottom: 1px solid #56166B !important;
-            box-shadow: 0 1px 0 0 #56166B !important;
+            /*box-shadow: 0 1px 0 0 #56166B !important;*/
         }
 
         #result {
@@ -78,76 +78,303 @@
             color: #56166B;
             text-align: center;
         }
+
+        /* Floor Plan Styling */
+        .floor-plan {
+            display: grid;
+            grid-template-columns: repeat(2, auto);
+            gap: 40px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+         /* Stage styling */
+         .stage {
+            background-color: #333;
+            color: white;
+            font-weight: bold;
+            padding: 15px;
+            font-size: 1.2em;
+            border-radius: 5px;
+        }
+
+        /* Table Group Styling */
+        .table-group {
+            display: grid;
+            grid-template-columns: repeat(6, 60px);
+            grid-gap: 10px;
+        }
+         /* Stage styling */
+         .stage {
+            background-color: #333;
+            color: white;
+            font-weight: bold;
+            padding: 8px 90px;
+            font-size: 1.2em;
+            border-radius: 5px;
+        }
+
+        /* Table Styling */
+        .table {
+            width: 50px;
+            height: 50px;
+            background-color: #e0e0e0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+            color: #333;
+            cursor: pointer;
+        }
+        .highlight-table {
+            background-color: #56166B;
+            color: white;
+        }
+        .empty {
+            background-color: transparent;
+        }
     </style>
 </head>
 <body>
-<!-- Header Section with Main Title and Subtitle -->
-<div class="header">
-    <h4>WiTWA Tech [+] Conference 2024</h4>
-    <p>Type in your name to find Your Table for the day!</p>
-</div>
-
-<!-- Table Finder Card Section -->
-<div class="container">
-    <div class="card">
-        <h5>Find Your Table</h5>
-        <div class="input-field">
-            <input type="text" id="searchBar" class="autocomplete" placeholder="Enter your name...">
-            <label for="searchBar">Name</label>
-        </div>
-        <div id="result"></div>
+    <!-- Header Section with Main Title and Subtitle -->
+    <div class="header">
+        <h4>WiTWA Tech [+] Conference 2024</h4>
+        <p>Type in your name to find your table for the day!</p>
     </div>
-</div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        let data = [];
-        let autocompleteData = {};
+    <!-- Table Finder Card Section -->
+    <div class="container">
+        <div class="card">
+            <h5>Find Your Table</h5>
+            <div class="input-field">
+                <input type="text" id="searchBar" class="autocomplete" placeholder="Enter your name...">
+                <label for="searchBar">Name</label>
+            </div>
+            <div id="result"></div>
+        </div>
+    </div>
 
-        // CSV data directly added as a string
-        fetch('table_data.csv')
-            .then(response => response.text())
-            .then(text => parseCSV(text))
-            .catch(error => console.error('Error loading CSV:', error));
+    <div class="stage">STAGE</div>
+    <!-- Floor Plan Section -->
+    <div class="floor-plan">
 
-        function parseCSV(text) {
-            data = [];
-            autocompleteData = {};
-            const lines = text.trim().split("\n");
-            lines.forEach(line => {
-                const [name, tableNumber] = line.split(",");
-                if (name && tableNumber) {
-                    const trimmedName = name.trim();
-                    data.push({ name: trimmedName, table: tableNumber.trim() });
-                    autocompleteData[trimmedName] = null; // Materialize autocomplete expects { key: null }
-                }
-            });
-            initializeAutocomplete();
-        }
+        
+        <!-- Left Group of Tables -->
+        <div class="table-group">
+            <!-- Row 1 Left -->
+            <div class="table empty" id=""></div>
+            <div class="table" id="table1">1</div>
+            <div class="table" id="table2">2</div>
+            <div class="table" id="table3">3</div>
+            <div class="table" id="table4">4</div>
+            <div class="table" id="table5">5</div>
 
-        function initializeAutocomplete() {
-            const searchBar = document.getElementById('searchBar');
-            M.Autocomplete.init(searchBar, {
-                data: autocompleteData,
-                onAutocomplete: (selectedName) => {
-                    // Find the table number based on the selected name
-                    const result = data.find(person => person.name === selectedName);
-                    document.getElementById('result').textContent = result
-                        ? `${result.name} is at Table ${result.table}`
-                        : "No matching name found.";
-                }
-            });
-        }
+            <!-- Row 2 Left -->
+            <div class="table empty" id=""></div>
+            <div class="table" id="table21">21</div>
+            <div class="table" id="table20">20</div>
+            <div class="table" id="table19">19</div>
+            <div class="table" id="table18">18</div>
+            <div class="table" id="table17">17</div>
 
-        // Optional: Clear results if search bar is emptied
-        document.getElementById('searchBar').addEventListener('input', (event) => {
-            if (!event.target.value) {
-                document.getElementById('result').textContent = '';
+            <!-- Row 3 Left -->
+            <div class="table" id="table22">22</div>
+            <div class="table" id="table23">23</div>
+            <div class="table" id="table24">24</div>
+            <div class="table" id="table25">25</div>
+            <div class="table" id="table26">26</div>
+            <div class="table" id="table27">27</div>
+
+            <!-- Row 4 Left -->
+            <div class="table empty" id=""></div>
+            <div class="table" id="table44">44</div>
+            <div class="table" id="table43">43</div>
+            <div class="table" id="table42">42</div>
+            <div class="table" id="table41">41</div>
+            <div class="table" id="table40">40</div>
+
+            <!-- Row 5 Left -->
+            <div class="table empty" id=""></div>
+            <div class="table" id="table45">45</div>
+            <div class="table" id="table46">46</div>
+            <div class="table" id="table47">47</div>
+            <div class="table" id="table48">48</div>
+            <div class="table" id="table49">49</div>
+
+            
+            <!-- Row 6 Left -->
+            <div class="table empty" id=""></div>
+            <div class="table" id="table65">65</div>
+            <div class="table" id="table64">64</div>
+            <div class="table" id="table63">63</div>
+            <div class="table" id="table62">62</div>
+            <div class="table" id="table61">61</div>
+
+            
+            <!-- Row 7 Left -->
+            <div class="table empty" id=""></div>
+            <div class="table" id="table66">66</div>
+            <div class="table" id="table67">67</div>
+            <div class="table" id="table68">68</div>
+            <div class="table" id="table69">69</div>
+            <div class="table" id="table70">70</div>
+
+
+            <!-- Row 8 Left -->
+            <div class="table empty" id=""></div>
+            <div class="table" id="table85">85</div>
+            <div class="table" id="table84">84</div>
+            <div class="table" id="table83">83</div>
+            <div class="table" id="table82">82</div>
+            <div class="table" id="table81">81</div>
+
+        </div>
+
+        <!-- Right Group of Tables -->
+        <div class="table-group">
+            <!-- Row 1 Right -->
+            <div class="table" id="table6">6</div>
+            <div class="table" id="table7">7</div>
+            <div class="table" id="table8">8</div>
+            <div class="table" id="table9">9</div>
+            <div class="table" id="table10">10</div>
+            <div class="table empty" id=""></div>
+
+            <!-- Row 2 Right -->
+            <div class="table" id="table16">16</div>
+            <div class="table" id="table15">15</div>
+            <div class="table" id="table14">14</div>
+            <div class="table" id="table13">13</div>
+            <div class="table" id="table12">12</div>
+            <div class="table" id="table11">11</div>
+
+
+            <!-- Row 3 Right -->
+            <div class="table" id="table28">28</div>
+            <div class="table" id="table29">29</div>
+            <div class="table" id="table30">30</div>
+            <div class="table" id="table31">31</div>
+            <div class="table" id="table32">32</div>
+            <div class="table" id="table33">33</div>
+
+            <!-- Row 4 Right -->
+            <div class="table" id="table39">39</div>
+            <div class="table" id="table38">38</div>
+            <div class="table" id="table37">37</div>
+            <div class="table" id="table36">36</div>
+            <div class="table" id="table35">35</div>
+            <div class="table" id="table34">34</div>
+
+            <!-- Row 5 Right -->
+            <div class="table" id="table50">50</div>
+            <div class="table" id="table51">51</div>
+            <div class="table" id="table52">52</div>
+            <div class="table" id="table53">53</div>
+            <div class="table" id="table54">54</div>
+            <div class="table empty" id=""></div>
+
+            <!-- Row 6 Right -->
+            <div class="table" id="table60">60</div>
+            <div class="table" id="table59">59</div>
+            <div class="table" id="table58">58</div>
+            <div class="table" id="table57">57</div>
+            <div class="table" id="table56">56</div>
+            <div class="table" id="table55">55</div>
+            
+            <!-- Row 7 Right -->
+            <div class="table" id="table71">71</div>
+            <div class="table" id="table72">72</div>
+            <div class="table" id="table73">73</div>
+            <div class="table" id="table74">74</div>
+            <div class="table" id="table75">75</div>
+            <div class="table empty" id=""></div>
+            
+            <!-- Row 8 Right -->
+            
+            <div class="table" id="table80">80</div>
+            <div class="table" id="table79">79</div>
+            <div class="table" id="table78">78</div>
+            <div class="table" id="table77">77</div>
+            <div class="table" id="table76">76</div>
+            <div class="table empty" id=""></div>
+
+            
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let data = [];
+            let autocompleteData = {};
+
+            // CSV data directly added as a string
+            const csvData = `
+                Name,Table Number
+                Alice,12
+                Bob,5
+                Charlie,8
+                David,15
+                Eve,3
+            `;
+
+            // Parse the CSV data string
+            parseCSV(csvData);
+
+            function parseCSV(text) {
+                data = [];
+                autocompleteData = {};
+                const lines = text.trim().split("\n");
+                lines.forEach(line => {
+                    const [name, tableNumber] = line.split(",");
+                    if (name && tableNumber) {
+                        const trimmedName = name.trim();
+                        data.push({ name: trimmedName, table: tableNumber.trim() });
+                        autocompleteData[trimmedName] = null; // Materialize autocomplete expects { key: null }
+                    }
+                });
+                initializeAutocomplete();
             }
-        });
-    });
-</script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            function initializeAutocomplete() {
+                const searchBar = document.getElementById('searchBar');
+                M.Autocomplete.init(searchBar, {
+                    data: autocompleteData,
+                    onAutocomplete: (selectedName) => {
+                        // Find the table number based on the selected name
+                        const result = data.find(person => person.name === selectedName);
+                        if (result) {
+                            document.getElementById('result').textContent = `${result.name} is at Table ${result.table}`;
+                            highlightTable(result.table);
+                        } else {
+                            document.getElementById('result').textContent = "No matching name found.";
+                        }
+                    }
+                });
+            }
+
+            function highlightTable(tableNumber) {
+                // Clear previous highlights
+                document.querySelectorAll(".table").forEach(table => {
+                    table.classList.remove("highlight-table");
+                });
+                
+                // Highlight the selected table
+                const selectedTable = document.getElementById(`table${tableNumber}`);
+                if (selectedTable) {
+                    selectedTable.classList.add("highlight-table");
+                }
+            }
+
+            // Optional: Clear results if search bar is emptied
+            document.getElementById('searchBar').addEventListener('input', (event) => {
+                if (!event.target.value) {
+                    document.getElementById('result').textContent = '';
+                    document.querySelectorAll(".table").forEach(table => table.classList.remove("highlight-table"));
+                }
+            });
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>
