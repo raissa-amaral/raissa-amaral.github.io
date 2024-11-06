@@ -337,6 +337,24 @@
                         // Find the table number based on the selected name
                         const result = data.find(person => person.name === selectedName);
                         if (result) {
+                            if(result.table = '65') {
+                                document.getElementById('result').textContent = `${result.name}, please use any of the "WELCOME" tables`;
+                                highlightTable(34);
+                                highlightTable(35);
+                                highlightTable(52);
+                                highlightTable(53);
+                                highlightTable(54);
+                                highlightTable(55);
+                                highlightTable(56);
+                                highlightTable(57);
+                                highlightTable(58);
+                                highlightTable(59);
+                                highlightTable(74);
+                                highlightTable(75);
+                                highlightTable(78);
+                                highlightTable(79);
+                                highlightTable(80);
+                            }
                             document.getElementById('result').textContent = `${result.name} is at Table ${result.table}`;
                             highlightTable(result.table);
                         } else {
