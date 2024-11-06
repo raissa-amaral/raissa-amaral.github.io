@@ -354,9 +354,10 @@
                                 highlightTable(78);
                                 highlightTable(79);
                                 highlightTable(80);
+                            } else {
+                                document.getElementById('result').textContent = `${result.name} is at Table ${result.table}`;
+                                highlightTable(result.table);
                             }
-                            document.getElementById('result').textContent = `${result.name} is at Table ${result.table}`;
-                            highlightTable(result.table);
                         } else {
                             document.getElementById('result').textContent = "No matching name found.";
                         }
