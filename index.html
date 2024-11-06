@@ -339,24 +339,10 @@
                         if (result) {
                             if(result.table = '65') {
                                 document.getElementById('result').textContent = `${result.name}, please use any of the "WELCOME" tables`;
-                                highlightTable(34);
-                                highlightTable(35);
-                                highlightTable(52);
-                                highlightTable(53);
-                                highlightTable(54);
-                                highlightTable(55);
-                                highlightTable(56);
-                                highlightTable(57);
-                                highlightTable(58);
-                                highlightTable(59);
-                                highlightTable(74);
-                                highlightTable(75);
-                                highlightTable(78);
-                                highlightTable(79);
-                                highlightTable(80);
+                                highlightTable([34,35,52,53,54,55,56,57,58,59,74,75,78,79,80]);
                             } else {
                                 document.getElementById('result').textContent = `${result.name} is at Table ${result.table}`;
-                                highlightTable(result.table);
+                                highlightTable([result.table]);
                             }
                         } else {
                             document.getElementById('result').textContent = "No matching name found.";
@@ -370,12 +356,15 @@
                 document.querySelectorAll(".table").forEach(table => {
                     table.classList.remove("highlight-table");
                 });
+
+
+                tableNumber.forEach(table => {
+                    const selectedTable = document.getElementById(`table${tableNumber}`);
+                    if (selectedTable) {
+                        selectedTable.classList.add("highlight-table");
+                    }
+                });
                 
-                // Highlight the selected table
-                const selectedTable = document.getElementById(`table${tableNumber}`);
-                if (selectedTable) {
-                    selectedTable.classList.add("highlight-table");
-                }
             }
 
             // Optional: Clear results if search bar is emptied
