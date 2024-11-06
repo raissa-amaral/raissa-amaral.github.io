@@ -307,6 +307,19 @@
             let data = [];
             let autocompleteData = {};
 
+            //  // CSV data directly added as a string
+            //  const csvData = `
+            //     Name,Table Number
+            //     Alice,12
+            //     Bob,5
+            //     Charlie,65
+            //     David,15
+            //     Eve,3
+            // `;
+
+            // // Parse the CSV data string
+            // parseCSV(csvData);
+
             // Parse the CSV data string
            // CSV data directly added as a string
             fetch('table_data.csv')
@@ -337,7 +350,7 @@
                         // Find the table number based on the selected name
                         const result = data.find(person => person.name === selectedName);
                         if (result) {
-                            if(result.table = '65') {
+                            if(result.table == '65') {
                                 document.getElementById('result').textContent = `${result.name}, please use any of the "WELCOME" tables`;
                                 highlightTable([34,35,52,53,54,55,56,57,58,59,74,75,78,79,80]);
                             } else {
@@ -358,7 +371,7 @@
                 });
 
 
-                tableNumber.forEach(table => {
+                tableNumber.forEach(tableNumber => {
                     const selectedTable = document.getElementById(`table${tableNumber}`);
                     if (selectedTable) {
                         selectedTable.classList.add("highlight-table");
