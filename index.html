@@ -146,7 +146,7 @@
     <!-- Header Section with Main Title and Subtitle -->
     <div class="header">
         <br><br>
-        <h4>WiTWA Tech [+] Conference 2024</h4>
+        <h4>WiTWA Tech [+] Awards 2024</h4>
         <p>Type in your name to find your table for the day!</p>
     </div>
 
@@ -360,16 +360,16 @@
                         // Find the table number based on the selected name
                         const result = data.find(person => person.name === selectedName);
                         if (result) {
-                            if(result.table == '34') {
-                                document.getElementById('result').textContent = `${result.name}, please use any of the "WELCOME" tables`;
-                                highlightTable([34,35,52,53,54,55,56,57,58,59,74,75,78,79,80]);
-                            }else if(result.table == '76') {
-                                document.getElementById('result').textContent = `${result.name}, please use any of the "WITWA RESERVED" tables at the back`;
-                                highlightTable([76,77,78]);
-                            } else {
+                            // if(result.table == '34') {
+                            //     document.getElementById('result').textContent = `${result.name}, please use any of the "WELCOME" tables`;
+                            //     highlightTable([34,35,52,53,54,55,56,57,58,59,74,75,78,79,80]);
+                            // }else if(result.table == '76') {
+                            //     document.getElementById('result').textContent = `${result.name}, please use any of the "WITWA RESERVED" tables at the back`;
+                            //     highlightTable([76,77,78]);
+                            // } else {
                                 document.getElementById('result').textContent = `${result.name} is at Table ${result.table}`;
                                 highlightTable([result.table]);
-                            }
+                            // }
                         } else {
                             document.getElementById('result').textContent = "No matching name found.";
                         }
